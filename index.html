@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM API Пример</title>
+    <style>
+        p {
+            color: black;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Заголовок</h1>
+    <p>Это абзац текста.</p>
+    <ul id="myList">
+        <li>Элемент списка 1</li>
+        <li>Элемент списка 2</li>
+        <li>Элемент списка 3</li>
+    </ul>
+    <img id="myImage" src="https://via.placeholder.com/150" alt="Placeholder">
+    
+    <a id="myLink" href="https://example.com">Старая ссылка</a>
+    
+    <button id="addItem">Добавить элемент в список</button>
+    <button id="removeItem">Удалить последний элемент списка</button>
+    
+    <button id="changeStyle">Изменить стиль абзаца</button>
+    <button id="toggleParagraph">Скрыть/Показать абзац</button>
+    <button id="getDimensions">Получить размеры заголовка</button>
+    
+    <!-- Форма -->
+    <form id="myForm">
+        <input type="text" id="name" placeholder="Имя" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        // 1. Поиск элементов и изменение содержимого
+        document.querySelector('h1').innerText = 'Новый заголовок';
+        const listItems = document.querySelectorAll('#myList li');
+        listItems.forEach((item, index) => {
+            item.innerText += ` (Элемент ${index + 1})`;
+        });
+
+        // 2. Редактирование атрибутов
+        const myImage = document.getElementById('myImage');
+        myImage.setAttribute('src', 'https://via.placeholder.com/300');
+        
+        const myLink = document.getElementById('myLink');
+        myLink.setAttribute('href', 'https://lms.osnovanie.info/');
+        myLink.innerHTML = 'Новая ссылка';
+
+        // 3. Манипуляции с элементами
+        const myList = document.getElementById('myList');
+
+        document.getElementById('addItem').onclick = function() {
+            const newItem = document.createElement('li');
+            newItem.innerText = `Новый элемент`;
+            myList.appendChild(newItem);
+        };
+
+        document.getElementById('removeItem').onclick = function() {
+            if (myList.lastChild) {
+                myList.removeChild(myList.lastChild);
+            }
+        };
+
+        // 4. Манипуляции со стилями CSS
+        const paragraph = document.querySelector('p');
+
+        document.getElementById('changeStyle').onclick = function() {
+            paragraph.style.color = 'blue';
+        };
+
+        document.getElementById('toggleParagraph').onclick = function() {
+            paragraph.style.display = (paragraph.style.display === 'none') ? 'block' : 'none';
+        };
+
+        // 5. Работа с геометрией элементов
+        document.getElementById('getDimensions').onclick = function() {
+            const rect = document.querySelector('h1').getBoundingClientRect();
+            console.log(`Ширина: ${rect.width}, Высота: ${rect.height}`);
+            alert(`Ширина: ${rect.width}, Высота: ${rect.height}`);
+        };
+
+        // Дополнительное задание: Работа с формой
+        document.getElementById('myForm').onsubmit = function(event) {
+            event.preventDefault(); // Остановить отправку формы
+            const nameValue = document.getElementById('name').value;
+            const emailValue = document.getElementById('email').value;
+
+            if (!nameValue || !emailValue) {
+                alert('Пожалуйста, заполните все поля.');
+            } else {
+                alert(`Имя: ${nameValue}, Email: ${emailValue}`);
+            }
+        };
+    </script>
+</body>
+</html>
